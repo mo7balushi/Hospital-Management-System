@@ -14,6 +14,7 @@ public class Person {
     private int age;
     private boolean active;
 
+    //constructor
     public Person(
             String id,
             String firstName,
@@ -39,6 +40,7 @@ public class Person {
         this.age = age;
         this.active = active;
     }
+    // overloaded constructor
     public Person(
             String id,
             String firstName,
@@ -57,5 +59,98 @@ public class Person {
                 0,
                 true
         );
+    }
+
+    // Setters ______________________________________________
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setNationalId(String nationalId) {
+        this.nationalId = nationalId;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+
+// Getters ______________________________________________
+
+    public String getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getNationalId() {
+        return nationalId;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }
