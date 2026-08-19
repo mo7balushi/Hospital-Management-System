@@ -242,6 +242,21 @@ public class Person {
     public boolean isAdult() {
         return getAge() >= 18;
     }
-    ////
+    @Override
+    public boolean equals(Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Person)) {
+            return false;
+        }
+
+        Person other = (Person) obj;
+
+        return id != null && id.equals(other.id);
+    }
+
 
 }
