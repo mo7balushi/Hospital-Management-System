@@ -161,4 +161,4 @@ public class InPatient extends Patient {
                         ", Total Room Cost: " + totalRoomCost()
         );
     }
-}
+}//
