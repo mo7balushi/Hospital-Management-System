@@ -212,4 +212,35 @@ public class Person {
     public boolean isActive() {
         return active;
     }
+
+    public String getFullName() {
+        return getFirstName() + " " + getLastName();
+    }
+
+    public void displayInfo() {
+        System.out.println(
+                "ID: " + getId() +
+                        ", Name: " + getFullName() +
+                        ", Age: " + getAge() +
+                        ", Phone: " + getPhoneNumber() +
+                        ", Email: " + getEmail()
+        );
+    }
+    public String displaySummary() {
+        return getId() + " - " + getFullName();
+    }
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id='" + id + '\'' +
+                ", name='" + getFullName() + '\'' +
+                ", age=" + age +
+                ", active=" + active +
+                '}';
+    }
+
+    public boolean isAdult() {
+        return getAge() >= 18;
+    }
+
 }
