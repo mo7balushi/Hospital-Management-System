@@ -39,4 +39,23 @@ public class Person {
         this.age = age;
         this.active = active;
     }
+    public Person(
+            String id,
+            String firstName,
+            String lastName) {
+
+        this(
+                id,
+                firstName,
+                lastName,
+                "N/A",
+                "Unknown",
+                "00000000",
+                "unknown@hospital.com",
+                "N/A",
+                "N/A",
+                0,
+                true
+        );
+    }
 }
