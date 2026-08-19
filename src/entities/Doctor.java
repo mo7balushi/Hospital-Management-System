@@ -231,4 +231,12 @@ public class Doctor extends Person {
                         ", On Call: " + isOnCall()
         );
     }
+    public void updateFee(double fee) {
+        setConsultationFee(fee);
+    }
+
+    public void updateFee(double fee, String reason) {
+        setConsultationFee(fee);
+        System.out.println("Reason: " + reason);
+    }
 }
