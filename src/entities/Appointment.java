@@ -134,7 +134,7 @@ public class Appointment {
     public String getStatus() {
         return status;
     }
-
+//
     public boolean isCompleted() {
         return completed;
     }
