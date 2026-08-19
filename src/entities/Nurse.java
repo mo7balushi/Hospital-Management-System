@@ -127,7 +127,7 @@ public class Nurse extends Person {
     }
 
 
-    // Unassign Patient _________________________________________
+    // Unassign Patient _______________________________
 
     public void unassignPatient(String patientId) {
 
