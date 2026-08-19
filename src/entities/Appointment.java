@@ -7,9 +7,9 @@ public class Appointment {
     private String doctorId;
     private String appointmentDate;
     private String appointmentTime;
-    private String reason;
     private String status;
-    private boolean completed;
+    private String reason;
+    private boolean followUp;
 
 
     // Constructor ______________________________________________
@@ -20,18 +20,18 @@ public class Appointment {
             String doctorId,
             String appointmentDate,
             String appointmentTime,
-            String reason,
             String status,
-            boolean completed) {
+            String reason,
+            boolean followUp) {
 
         setAppointmentId(appointmentId);
         setPatientId(patientId);
         setDoctorId(doctorId);
         setAppointmentDate(appointmentDate);
         setAppointmentTime(appointmentTime);
-        setReason(reason);
         setStatus(status);
-        setCompleted(completed);
+        setReason(reason);
+        setFollowUp(followUp);
     }
 
 
@@ -82,26 +82,27 @@ public class Appointment {
         this.appointmentTime = appointmentTime;
     }
 
-    public void setReason(String reason) {
-        if (reason == null || reason.trim().isEmpty()) {
-            System.out.println("Reason cannot be empty.");
-            return;
-        }
-
-        this.reason = reason;
-    }
-
     public void setStatus(String status) {
-        if (status == null || status.trim().isEmpty()) {
-            System.out.println("Status cannot be empty.");
+
+        if (status == null ||
+                (!status.equalsIgnoreCase("Scheduled")
+                        && !status.equalsIgnoreCase("Cancelled")
+                        && !status.equalsIgnoreCase("Completed")
+                        && !status.equalsIgnoreCase("Rescheduled"))) {
+
+            System.out.println("Invalid appointment status.");
             return;
         }
 
         this.status = status;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public void setFollowUp(boolean followUp) {
+        this.followUp = followUp;
     }
 
 
@@ -127,30 +128,31 @@ public class Appointment {
         return appointmentTime;
     }
 
-    public String getReason() {
-        return reason;
-    }
-
     public String getStatus() {
         return status;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public String getReason() {
+        return reason;
+    }
+
+    public boolean isFollowUp() {
+        return followUp;
     }
 
 
-    // Functions ________________________________________________
+    // Status Methods ___________________________________________
 
-    public void cancelAppointment() {
-        status = "CANCELLED";
-        completed = false;
+    public void cancel() {
+        setStatus("Cancelled");
     }
 
-    public void completeAppointment() {
-        status = "COMPLETED";
-        completed = true;
+    public void complete() {
+        setStatus("Completed");
     }
+
+
+    // Reschedule _______________________________________________
 
     public void reschedule(
             String newDate,
@@ -158,18 +160,30 @@ public class Appointment {
 
         setAppointmentDate(newDate);
         setAppointmentTime(newTime);
+        setStatus("Rescheduled");
     }
 
+
+    // Compare Date _____________________________________________
+
+    public boolean isPast(String currentDate) {
+        return appointmentDate.compareTo(currentDate) < 0;
+    }
+
+
+    // Display _________________________________________________
+
     public void displayInfo() {
+
         System.out.println(
                 "Appointment ID: " + getAppointmentId() +
                         ", Patient ID: " + getPatientId() +
                         ", Doctor ID: " + getDoctorId() +
                         ", Date: " + getAppointmentDate() +
                         ", Time: " + getAppointmentTime() +
-                        ", Reason: " + getReason() +
                         ", Status: " + getStatus() +
-                        ", Completed: " + isCompleted()
+                        ", Reason: " + getReason() +
+                        ", Follow Up: " + isFollowUp()
         );
     }
 }
