@@ -174,7 +174,7 @@ public class Appointment {
     // Display _________________________________________________
 
     public void displayInfo() {
-
+//
         System.out.println(
                 "Appointment ID: " + getAppointmentId() +
                         ", Patient ID: " + getPatientId() +
