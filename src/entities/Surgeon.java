@@ -1,5 +1,7 @@
 package entities;
 
+import utils.HelperUtils;
+
 public class Surgeon extends Doctor {
 
     private int surgeriesPerformed;
@@ -30,7 +32,6 @@ public class Surgeon extends Doctor {
             int surgeriesPerformed,
             boolean operationTheatreAccess) {
 
-        // Person -> Doctor -> Surgeon
         super(
                 id,
                 firstName,
@@ -61,20 +62,30 @@ public class Surgeon extends Doctor {
 
     public void setSurgeriesPerformed(int surgeriesPerformed) {
 
-        if (surgeriesPerformed < 0) {
-            System.out.println("Surgeries performed cannot be negative.");
+        if (!HelperUtils.isInRange(
+                surgeriesPerformed,
+                0,
+                Integer.MAX_VALUE)) {
+
+            System.out.println(
+                    "Surgeries performed cannot be negative."
+            );
             return;
         }
 
         this.surgeriesPerformed = surgeriesPerformed;
     }
 
-    public void setOperationTheatreAccess(boolean operationTheatreAccess) {
-        this.operationTheatreAccess = operationTheatreAccess;
+
+    public void setOperationTheatreAccess(
+            boolean operationTheatreAccess) {
+
+        this.operationTheatreAccess =
+                operationTheatreAccess;
     }
 
 
-    // Getters _________________________________________________
+    // Getters __________________________________===============
 
     public int getSurgeriesPerformed() {
         return surgeriesPerformed;
@@ -90,7 +101,9 @@ public class Surgeon extends Doctor {
     public void performSurgery() {
 
         if (!operationTheatreAccess) {
-            System.out.println("Surgeon does not have operation theatre access.");
+            System.out.println(
+                    "Surgeon does not have operation theatre access."
+            );
             return;
         }
 
@@ -100,17 +113,23 @@ public class Surgeon extends Doctor {
 
     public void scheduleSurgery(String surgeryDate) {
 
-        if (surgeryDate == null || surgeryDate.trim().isEmpty()) {
-            System.out.println("Surgery date cannot be empty.");
+        if (!HelperUtils.isValidText(surgeryDate)) {
+            System.out.println(
+                    "Surgery date cannot be empty."
+            );
             return;
         }
 
         if (upcomingCount >= upcomingSurgeryDates.length) {
-            System.out.println("Upcoming surgery list is full.");
+            System.out.println(
+                    "Upcoming surgery list is full."
+            );
             return;
         }
 
-        upcomingSurgeryDates[upcomingCount] = surgeryDate;
+        upcomingSurgeryDates[upcomingCount] =
+                surgeryDate;
+
         upcomingCount++;
     }
 
@@ -134,4 +153,4 @@ public class Surgeon extends Doctor {
                         ", Upcoming Surgeries: " + getUpcomingCount()
         );
     }
-}//
+}
