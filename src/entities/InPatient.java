@@ -1,5 +1,7 @@
 package entities;
 
+import utils.HelperUtils;
+
 public class InPatient extends Patient {
 
     private String admissionDate;
@@ -32,7 +34,6 @@ public class InPatient extends Patient {
             double dailyCharges,
             int daysAdmitted) {
 
-        // Person -> Patient -> InPatient
         super(
                 id,
                 firstName,
@@ -62,7 +63,8 @@ public class InPatient extends Patient {
     // Setters _________________________________________________
 
     public void setAdmissionDate(String admissionDate) {
-        if (admissionDate == null || admissionDate.trim().isEmpty()) {
+
+        if (!HelperUtils.isValidText(admissionDate)) {
             System.out.println("Admission date cannot be empty.");
             return;
         }
@@ -70,8 +72,10 @@ public class InPatient extends Patient {
         this.admissionDate = admissionDate;
     }
 
+
     public void setRoomNumber(String roomNumber) {
-        if (roomNumber == null || roomNumber.trim().isEmpty()) {
+
+        if (!HelperUtils.isValidText(roomNumber)) {
             System.out.println("Room number cannot be empty.");
             return;
         }
@@ -79,18 +83,34 @@ public class InPatient extends Patient {
         this.roomNumber = roomNumber;
     }
 
+
     public void setDailyCharges(double dailyCharges) {
-        if (dailyCharges < 0) {
-            System.out.println("Daily charges cannot be negative.");
+
+        if (!HelperUtils.isInRange(
+                dailyCharges,
+                0.0,
+                Double.MAX_VALUE)) {
+
+            System.out.println(
+                    "Daily charges cannot be negative."
+            );
             return;
         }
 
         this.dailyCharges = dailyCharges;
     }
 
+
     public void setDaysAdmitted(int daysAdmitted) {
-        if (daysAdmitted < 0) {
-            System.out.println("Days admitted cannot be negative.");
+
+        if (!HelperUtils.isInRange(
+                daysAdmitted,
+                0,
+                Integer.MAX_VALUE)) {
+
+            System.out.println(
+                    "Days admitted cannot be negative."
+            );
             return;
         }
 
@@ -98,7 +118,7 @@ public class InPatient extends Patient {
     }
 
 
-    // Getters _________________________________________________
+    // Getters __________________________________===============
 
     public String getAdmissionDate() {
         return admissionDate;
@@ -117,7 +137,7 @@ public class InPatient extends Patient {
     }
 
 
-    // Admit _________________________________________________
+    // Admit __________________________________===============
 
     public void admit(
             String admissionDate,
@@ -150,6 +170,7 @@ public class InPatient extends Patient {
 
     @Override
     public void displayInfo() {
+
         System.out.println(
                 "InPatient: " + getFullName() +
                         ", ID: " + getId() +
@@ -161,4 +182,4 @@ public class InPatient extends Patient {
                         ", Total Room Cost: " + totalRoomCost()
         );
     }
-}//
+}
