@@ -1,5 +1,7 @@
 package entities;
 
+import utils.HelperUtils;
+
 public class Nurse extends Person {
 
     private String departmentId;
@@ -54,7 +56,7 @@ public class Nurse extends Person {
 
     public void setDepartmentId(String departmentId) {
 
-        if (departmentId == null || departmentId.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(departmentId)) {
             System.out.println("Department ID cannot be empty.");
             return;
         }
@@ -65,11 +67,13 @@ public class Nurse extends Person {
 
     public void setShift(String shift) {
 
-        if (shift == null ||
-                (!shift.equalsIgnoreCase("Morning")
-                        && !shift.equalsIgnoreCase("Evening")
-                        && !shift.equalsIgnoreCase("Night"))) {
+        String[] allowedShifts = {
+                "Morning",
+                "Evening",
+                "Night"
+        };
 
+        if (!HelperUtils.isOneOf(shift, allowedShifts)) {
             System.out.println(
                     "Shift must be Morning, Evening, or Night."
             );
@@ -82,7 +86,11 @@ public class Nurse extends Person {
 
     public void setYearsOfService(int yearsOfService) {
 
-        if (yearsOfService < 0) {
+        if (!HelperUtils.isInRange(
+                yearsOfService,
+                0,
+                Integer.MAX_VALUE)) {
+
             System.out.println(
                     "Years of service cannot be negative."
             );
@@ -93,7 +101,7 @@ public class Nurse extends Person {
     }
 
 
-    // Getters _________________________________________________
+    // Getters __________________________________===============
 
     public String getDepartmentId() {
         return departmentId;
@@ -112,7 +120,7 @@ public class Nurse extends Person {
 
     public void assignPatient(String patientId) {
 
-        if (patientId == null || patientId.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(patientId)) {
             System.out.println("Patient ID cannot be empty.");
             return;
         }
@@ -127,15 +135,24 @@ public class Nurse extends Person {
     }
 
 
-    // Unassign Patient _____?__________________________
+    // Unassign Patient _________________________________________
 
     public void unassignPatient(String patientId) {
 
+        if (!HelperUtils.isValidText(patientId)) {
+            System.out.println("Patient ID cannot be empty.");
+            return;
+        }
+
         for (int i = 0; i < patientCount; i++) {
 
-            if (assignedPatientIds[i].equalsIgnoreCase(patientId)) {
+            if (assignedPatientIds[i]
+                    .equalsIgnoreCase(patientId)) {
 
-                for (int j = i; j < patientCount - 1; j++) {
+                for (int j = i;
+                     j < patientCount - 1;
+                     j++) {
+
                     assignedPatientIds[j] =
                             assignedPatientIds[j + 1];
                 }
@@ -147,7 +164,9 @@ public class Nurse extends Person {
             }
         }
 
-        System.out.println("Patient not assigned to this nurse.");
+        System.out.println(
+                "Patient not assigned to this nurse."
+        );
     }
 
 
@@ -161,8 +180,8 @@ public class Nurse extends Person {
     // Night Shift ______________________________________________
 
     public boolean isNightShift() {
-        return shift != null &&
-                shift.equalsIgnoreCase("Night");
+        return shift != null
+                && shift.equalsIgnoreCase("Night");
     }
 
 
