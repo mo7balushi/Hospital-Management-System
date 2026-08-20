@@ -1,8 +1,10 @@
 package services;
 
 import entities.Patient;
+import interfaces.Manageable;
+import interfaces.Searchable;
 
-public class PatientService {
+public class PatientService implements Manageable, Searchable {
 
     private Patient[] patients = new Patient[100];
     private int patientCount = 0;
@@ -89,5 +91,87 @@ public class PatientService {
 
     public int getPatientCount() {
         return patientCount;
+    }
+
+    @Override
+    public void add(Object entity) {
+        if (entity instanceof Patient) {
+            addPatient((Patient) entity);
+        }
+    }
+
+    @Override
+    public boolean removeById(String id) {
+        for (int i = 0; i < patientCount; i++) {
+            if (patients[i].getId().equals(id)) {
+
+                for (int j = i; j < patientCount - 1; j++) {
+                    patients[j] = patients[j + 1];
+                }
+
+                patients[patientCount - 1] = null;
+                patientCount--;
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public Object[] getAll() {
+
+        Patient[] result = new Patient[patientCount];
+
+        for (int i = 0; i < patientCount; i++) {
+            result[i] = patients[i];
+        }
+
+        return result;
+    }
+
+    @Override
+    public Object[] search(String keyword) {
+
+        Patient[] temp = new Patient[patientCount];
+        int count = 0;
+
+        for (int i = 0; i < patientCount; i++) {
+
+            Patient patient = patients[i];
+
+            if (patient.getFirstName().toLowerCase()
+                    .contains(keyword.toLowerCase())
+                    || patient.getLastName().toLowerCase()
+                    .contains(keyword.toLowerCase())
+                    || patient.getId().toLowerCase()
+                    .contains(keyword.toLowerCase())) {
+
+                temp[count] = patient;
+                count++;
+            }
+        }
+
+        Patient[] result = new Patient[count];
+
+        for (int i = 0; i < count; i++) {
+            result[i] = temp[i];
+        }
+
+        return result;
+    }
+
+    @Override
+    public Object searchById(String id) {
+
+        for (int i = 0; i < patientCount; i++) {
+
+            if (patients[i].getId().equals(id)) {
+                return patients[i];
+            }
+        }
+
+        return null;
     }
 }
