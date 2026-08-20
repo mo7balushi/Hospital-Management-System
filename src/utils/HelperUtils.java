@@ -176,7 +176,6 @@ public class HelperUtils {
                 return true;
             }
         }
-////
         return false;
     }
 }
