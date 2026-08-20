@@ -1,5 +1,6 @@
 package services;
 
+import entities.InPatient;
 import entities.Patient;
 import interfaces.Manageable;
 import interfaces.Searchable;
@@ -10,7 +11,11 @@ public class PatientService implements Manageable, Searchable {
     private int patientCount = 0;
 
 
-    // Add existing Patient object
+    // =========================================================
+    // ADD PATIENT OVERLOADS - Task 2.2
+    // =========================================================
+
+    // 1. Existing Patient object
     public void addPatient(Patient patient) {
 
         if (patient == null) {
@@ -23,12 +28,17 @@ public class PatientService implements Manageable, Searchable {
             return;
         }
 
+        if (searchById(patient.getId()) != null) {
+            System.out.println("Patient ID already exists.");
+            return;
+        }
+
         patients[patientCount] = patient;
         patientCount++;
     }
 
 
-    // Basic details
+    // 2. Basic details
     public void addPatient(
             String id,
             String firstName,
@@ -58,7 +68,7 @@ public class PatientService implements Manageable, Searchable {
     }
 
 
-    // Details + blood group
+    // 3. Details + blood group
     public void addPatient(
             String id,
             String firstName,
@@ -89,20 +99,27 @@ public class PatientService implements Manageable, Searchable {
     }
 
 
-    public int getPatientCount() {
-        return patientCount;
-    }
+    // =========================================================
+    // MANAGEABLE
+    // =========================================================
 
     @Override
     public void add(Object entity) {
-        if (entity instanceof Patient) {
-            addPatient((Patient) entity);
+
+        if (!(entity instanceof Patient)) {
+            System.out.println("Only Patient objects can be added.");
+            return;
         }
+
+        addPatient((Patient) entity);
     }
+
 
     @Override
     public boolean removeById(String id) {
+
         for (int i = 0; i < patientCount; i++) {
+
             if (patients[i].getId().equals(id)) {
 
                 for (int j = i; j < patientCount - 1; j++) {
@@ -119,6 +136,7 @@ public class PatientService implements Manageable, Searchable {
         return false;
     }
 
+
     @Override
     public Object[] getAll() {
 
@@ -131,6 +149,11 @@ public class PatientService implements Manageable, Searchable {
         return result;
     }
 
+
+    // =========================================================
+    // SEARCHABLE
+    // =========================================================
+
     @Override
     public Object[] search(String keyword) {
 
@@ -141,12 +164,19 @@ public class PatientService implements Manageable, Searchable {
 
             Patient patient = patients[i];
 
-            if (patient.getFirstName().toLowerCase()
-                    .contains(keyword.toLowerCase())
-                    || patient.getLastName().toLowerCase()
-                    .contains(keyword.toLowerCase())
-                    || patient.getId().toLowerCase()
-                    .contains(keyword.toLowerCase())) {
+            if (
+                    patient.getFirstName()
+                            .toLowerCase()
+                            .contains(keyword.toLowerCase())
+
+                            || patient.getLastName()
+                            .toLowerCase()
+                            .contains(keyword.toLowerCase())
+
+                            || patient.getId()
+                            .toLowerCase()
+                            .contains(keyword.toLowerCase())
+            ) {
 
                 temp[count] = patient;
                 count++;
@@ -162,6 +192,7 @@ public class PatientService implements Manageable, Searchable {
         return result;
     }
 
+
     @Override
     public Object searchById(String id) {
 
@@ -173,5 +204,106 @@ public class PatientService implements Manageable, Searchable {
         }
 
         return null;
+    }
+
+
+    // =========================================================
+    // UPDATE CONTACT - Task 2.7
+    // =========================================================
+
+    public boolean updateContact(
+            String patientId,
+            String phoneNumber) {
+
+        Patient patient =
+                (Patient) searchById(patientId);
+
+        if (patient == null) {
+            return false;
+        }
+
+        patient.updateContact(phoneNumber);
+
+        return true;
+    }
+
+
+    public boolean updateContact(
+            String patientId,
+            String phoneNumber,
+            String email) {
+
+        Patient patient =
+                (Patient) searchById(patientId);
+
+        if (patient == null) {
+            return false;
+        }
+
+        patient.updateContact(
+                phoneNumber,
+                email
+        );
+
+        return true;
+    }
+
+
+    // =========================================================
+    // LIST INPATIENTS - Task 2.7
+    // =========================================================
+
+    public InPatient[] listInPatients() {
+
+        InPatient[] temp =
+                new InPatient[patientCount];
+
+        int count = 0;
+
+        for (int i = 0; i < patientCount; i++) {
+
+            if (patients[i] instanceof InPatient) {
+
+                temp[count] =
+                        (InPatient) patients[i];
+
+                count++;
+            }
+        }
+
+        InPatient[] result =
+                new InPatient[count];
+
+        for (int i = 0; i < count; i++) {
+            result[i] = temp[i];
+        }
+
+        return result;
+    }
+
+
+    // =========================================================
+    // TOTAL OUTSTANDING - Task 2.7
+    // =========================================================
+
+    public double totalOutstanding() {
+
+        double total = 0;
+
+        for (int i = 0; i < patientCount; i++) {
+            total += patients[i]
+                    .getOutstandingBalance();
+        }
+
+        return total;
+    }
+
+
+    // =========================================================
+    // COUNT
+    // =========================================================
+
+    public int getPatientCount() {
+        return patientCount;
     }
 }
