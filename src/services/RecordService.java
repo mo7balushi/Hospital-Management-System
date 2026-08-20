@@ -10,37 +10,61 @@ public class RecordService implements Manageable, Searchable {
     private int recordCount = 0;
 
 
-    // Add ______________________________________________
+    // =========================================================
+    // Add
+    // =========================================================
 
     @Override
     public void add(Object entity) {
 
         if (!(entity instanceof MedicalRecord)) {
-            System.out.println("Only MedicalRecord objects can be added.");
+            System.out.println(
+                    "Only MedicalRecord objects can be added."
+            );
+            return;
+        }
+
+        MedicalRecord record =
+                (MedicalRecord) entity;
+
+        if (searchById(record.getRecordId()) != null) {
+            System.out.println(
+                    "Record ID already exists."
+            );
             return;
         }
 
         if (recordCount >= records.length) {
-            System.out.println("Record storage is full.");
+            System.out.println(
+                    "Record storage is full."
+            );
             return;
         }
 
-        records[recordCount] = (MedicalRecord) entity;
+        records[recordCount] = record;
         recordCount++;
     }
 
 
-    // Remove ___________________________________________
+    // =========================================================
+    // Remove By ID
+    // =========================================================
 
     @Override
     public boolean removeById(String id) {
 
         for (int i = 0; i < recordCount; i++) {
 
-            if (records[i].getRecordId().equals(id)) {
+            if (records[i]
+                    .getRecordId()
+                    .equals(id)) {
 
-                for (int j = i; j < recordCount - 1; j++) {
-                    records[j] = records[j + 1];
+                for (int j = i;
+                     j < recordCount - 1;
+                     j++) {
+
+                    records[j] =
+                            records[j + 1];
                 }
 
                 records[recordCount - 1] = null;
@@ -54,7 +78,9 @@ public class RecordService implements Manageable, Searchable {
     }
 
 
-    // Get All __________________________________________
+    // =========================================================
+    // Get All
+    // =========================================================
 
     @Override
     public Object[] getAll() {
@@ -70,7 +96,9 @@ public class RecordService implements Manageable, Searchable {
     }
 
 
-    // Search ___________________________________________
+    // =========================================================
+    // Search By Keyword
+    // =========================================================
 
     @Override
     public Object[] search(String keyword) {
@@ -118,14 +146,19 @@ public class RecordService implements Manageable, Searchable {
     }
 
 
-    // Search By ID _____________________________________
+    // =========================================================
+    // Search By ID
+    // =========================================================
 
     @Override
     public Object searchById(String id) {
 
         for (int i = 0; i < recordCount; i++) {
 
-            if (records[i].getRecordId().equals(id)) {
+            if (records[i]
+                    .getRecordId()
+                    .equals(id)) {
+
                 return records[i];
             }
         }
@@ -133,6 +166,63 @@ public class RecordService implements Manageable, Searchable {
         return null;
     }
 
+
+    // =========================================================
+    // List By Patient - Task 2.7
+    // =========================================================
+
+    public MedicalRecord[] listByPatient(
+            String patientId) {
+
+        MedicalRecord[] temp =
+                new MedicalRecord[recordCount];
+
+        int count = 0;
+
+        for (int i = 0; i < recordCount; i++) {
+
+            if (records[i]
+                    .getPatientId()
+                    .equalsIgnoreCase(patientId)) {
+
+                temp[count] = records[i];
+                count++;
+            }
+        }
+
+        MedicalRecord[] result =
+                new MedicalRecord[count];
+
+        for (int i = 0; i < count; i++) {
+            result[i] = temp[i];
+        }
+
+        return result;
+    }
+
+
+    // =========================================================
+    // Count Confidential - Task 2.7
+    // =========================================================
+
+    public int countConfidential() {
+
+        int count = 0;
+
+        for (int i = 0; i < recordCount; i++) {
+
+            if (records[i].isConfidential()) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+
+    // =========================================================
+    // Record Count
+    // =========================================================
 
     public int getRecordCount() {
         return recordCount;
