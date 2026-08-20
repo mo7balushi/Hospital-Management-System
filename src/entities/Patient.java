@@ -1,5 +1,7 @@
 package entities;
 
+import utils.HelperUtils;
+
 public class Patient extends Person {
 
     private String bloodGroup;
@@ -68,7 +70,7 @@ public class Patient extends Person {
 
     public void setBloodGroup(String bloodGroup) {
 
-        if (bloodGroup == null || bloodGroup.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(bloodGroup)) {
             System.out.println("Blood group cannot be empty.");
             return;
         }
@@ -79,7 +81,7 @@ public class Patient extends Person {
 
     public void setEmergencyContact(String emergencyContact) {
 
-        if (emergencyContact == null || emergencyContact.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(emergencyContact)) {
             System.out.println("Emergency contact cannot be empty.");
             return;
         }
@@ -90,7 +92,7 @@ public class Patient extends Person {
 
     public void setRegistrationDate(String registrationDate) {
 
-        if (registrationDate == null || registrationDate.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(registrationDate)) {
             System.out.println("Registration date cannot be empty.");
             return;
         }
@@ -150,7 +152,7 @@ public class Patient extends Person {
 
     public void addAllergy(String allergy) {
 
-        if (allergy == null || allergy.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(allergy)) {
             System.out.println("Allergy cannot be empty.");
             return;
         }
@@ -171,6 +173,10 @@ public class Patient extends Person {
 
 
     public boolean hasAllergy(String allergy) {
+
+        if (!HelperUtils.isValidText(allergy)) {
+            return false;
+        }
 
         for (int i = 0; i < allergyCount; i++) {
 
@@ -200,7 +206,7 @@ public class Patient extends Person {
 
     public void addRecordId(String recordId) {
 
-        if (recordId == null || recordId.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(recordId)) {
             System.out.println("Record ID cannot be empty.");
             return;
         }
@@ -219,7 +225,7 @@ public class Patient extends Person {
 
     public void addToBalance(double amount) {
 
-        if (amount <= 0) {
+        if (!HelperUtils.isPositive(amount)) {
             System.out.println("Amount must be greater than zero.");
             return;
         }
@@ -230,6 +236,22 @@ public class Patient extends Person {
 
     public void clearBalance() {
         outstandingBalance = 0;
+    }
+
+
+    // Contact Overloading - Task 2.2 ____________________________
+
+    public void updateContact(String phoneNumber) {
+        setPhoneNumber(phoneNumber);
+    }
+
+
+    public void updateContact(
+            String phoneNumber,
+            String email) {
+
+        setPhoneNumber(phoneNumber);
+        setEmail(email);
     }
 
 
@@ -248,15 +270,4 @@ public class Patient extends Person {
                         ", Insured: " + isInsured()
         );
     }
-    public void updateContact(String phoneNumber) {
-        setPhoneNumber(phoneNumber);
-    }
-
-    public void updateContact(
-            String phoneNumber,
-            String email) {
-
-        setPhoneNumber(phoneNumber);
-        setEmail(email);
-    }
-}////
+}
