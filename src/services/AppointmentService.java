@@ -16,7 +16,7 @@ public class AppointmentService implements Manageable, Searchable {
     // Schedule Overloads - Task 2.2
     // =========================================================
 
-    // Schedule 1: patient ID + doctor ID + date
+    // 1. Patient ID + Doctor ID + Date
     public void schedule(
             String patientId,
             String doctorId,
@@ -37,7 +37,7 @@ public class AppointmentService implements Manageable, Searchable {
     }
 
 
-    // Schedule 2: patient ID + doctor ID + date + time
+    // 2. Patient ID + Doctor ID + Date + Time
     public void schedule(
             String patientId,
             String doctorId,
@@ -59,7 +59,7 @@ public class AppointmentService implements Manageable, Searchable {
     }
 
 
-    // Schedule 3: Patient object + Doctor object + reason
+    // 3. Patient Object + Doctor Object + Reason
     public void schedule(
             Patient patient,
             Doctor doctor,
@@ -90,7 +90,7 @@ public class AppointmentService implements Manageable, Searchable {
 
 
     // =========================================================
-    // Manageable Interface Methods - Task 2.4
+    // Manageable
     // =========================================================
 
     @Override
@@ -103,15 +103,24 @@ public class AppointmentService implements Manageable, Searchable {
             return;
         }
 
+        Appointment appointment =
+                (Appointment) entity;
+
+        if (searchById(
+                appointment.getAppointmentId()) != null) {
+
+            System.out.println(
+                    "Appointment ID already exists."
+            );
+            return;
+        }
+
         if (appointmentCount >= appointments.length) {
             System.out.println(
                     "Appointment storage is full."
             );
             return;
         }
-
-        Appointment appointment =
-                (Appointment) entity;
 
         appointments[appointmentCount] = appointment;
         appointmentCount++;
@@ -161,7 +170,7 @@ public class AppointmentService implements Manageable, Searchable {
 
 
     // =========================================================
-    // Searchable Interface Methods - Task 2.4
+    // Searchable
     // =========================================================
 
     @Override
@@ -178,33 +187,21 @@ public class AppointmentService implements Manageable, Searchable {
                     appointments[i];
 
             if (
-                    appointment
-                            .getAppointmentId()
+                    appointment.getAppointmentId()
                             .toLowerCase()
-                            .contains(
-                                    keyword.toLowerCase()
-                            )
+                            .contains(keyword.toLowerCase())
 
-                            || appointment
-                            .getPatientId()
+                            || appointment.getPatientId()
                             .toLowerCase()
-                            .contains(
-                                    keyword.toLowerCase()
-                            )
+                            .contains(keyword.toLowerCase())
 
-                            || appointment
-                            .getDoctorId()
+                            || appointment.getDoctorId()
                             .toLowerCase()
-                            .contains(
-                                    keyword.toLowerCase()
-                            )
+                            .contains(keyword.toLowerCase())
 
-                            || appointment
-                            .getStatus()
+                            || appointment.getStatus()
                             .toLowerCase()
-                            .contains(
-                                    keyword.toLowerCase()
-                            )
+                            .contains(keyword.toLowerCase())
             ) {
 
                 temp[count] = appointment;
@@ -241,7 +238,138 @@ public class AppointmentService implements Manageable, Searchable {
 
 
     // =========================================================
-    // Helper Methods
+    // Cancel - Task 2.7
+    // =========================================================
+
+    public boolean cancel(String appointmentId) {
+
+        Appointment appointment =
+                (Appointment) searchById(appointmentId);
+
+        if (appointment == null) {
+            return false;
+        }
+
+        appointment.cancel();
+
+        return true;
+    }
+
+
+    // =========================================================
+    // Complete - Task 2.7
+    // =========================================================
+
+    public boolean complete(String appointmentId) {
+
+        Appointment appointment =
+                (Appointment) searchById(appointmentId);
+
+        if (appointment == null) {
+            return false;
+        }
+
+        appointment.complete();
+
+        return true;
+    }
+
+
+    // =========================================================
+    // Reschedule - Task 2.7
+    // =========================================================
+
+    public boolean reschedule(
+            String appointmentId,
+            String newDate,
+            String newTime) {
+
+        Appointment appointment =
+                (Appointment) searchById(appointmentId);
+
+        if (appointment == null) {
+            return false;
+        }
+
+        appointment.reschedule(
+                newDate,
+                newTime
+        );
+
+        return true;
+    }
+
+
+    // =========================================================
+    // List By Status - Task 2.7
+    // =========================================================
+
+    public Appointment[] listByStatus(
+            String status) {
+
+        Appointment[] temp =
+                new Appointment[appointmentCount];
+
+        int count = 0;
+
+        for (int i = 0; i < appointmentCount; i++) {
+
+            if (appointments[i]
+                    .getStatus()
+                    .equalsIgnoreCase(status)) {
+
+                temp[count] = appointments[i];
+                count++;
+            }
+        }
+
+        Appointment[] result =
+                new Appointment[count];
+
+        for (int i = 0; i < count; i++) {
+            result[i] = temp[i];
+        }
+
+        return result;
+    }
+
+
+    // =========================================================
+    // List By Patient - Task 2.7
+    // =========================================================
+
+    public Appointment[] listByPatient(
+            String patientId) {
+
+        Appointment[] temp =
+                new Appointment[appointmentCount];
+
+        int count = 0;
+
+        for (int i = 0; i < appointmentCount; i++) {
+
+            if (appointments[i]
+                    .getPatientId()
+                    .equalsIgnoreCase(patientId)) {
+
+                temp[count] = appointments[i];
+                count++;
+            }
+        }
+
+        Appointment[] result =
+                new Appointment[count];
+
+        for (int i = 0; i < count; i++) {
+            result[i] = temp[i];
+        }
+
+        return result;
+    }
+
+
+    // =========================================================
+    // Helper
     // =========================================================
 
     private void addAppointment(
