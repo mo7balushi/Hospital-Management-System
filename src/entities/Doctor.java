@@ -1,5 +1,7 @@
 package entities;
 
+import utils.HelperUtils;
+
 public class Doctor extends Person {
 
     private String specialization;
@@ -65,7 +67,7 @@ public class Doctor extends Person {
 
     public void setSpecialization(String specialization) {
 
-        if (specialization == null || specialization.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(specialization)) {
             System.out.println("Specialization cannot be empty.");
             return;
         }
@@ -76,8 +78,14 @@ public class Doctor extends Person {
 
     public void setExperienceYears(int experienceYears) {
 
-        if (experienceYears < 0) {
-            System.out.println("Experience years cannot be negative.");
+        if (!HelperUtils.isInRange(
+                experienceYears,
+                0,
+                Integer.MAX_VALUE)) {
+
+            System.out.println(
+                    "Experience years cannot be negative."
+            );
             return;
         }
 
@@ -87,8 +95,14 @@ public class Doctor extends Person {
 
     public void setConsultationFee(double consultationFee) {
 
-        if (consultationFee < 0) {
-            System.out.println("Consultation fee cannot be negative.");
+        if (!HelperUtils.isInRange(
+                consultationFee,
+                0.0,
+                Double.MAX_VALUE)) {
+
+            System.out.println(
+                    "Consultation fee cannot be negative."
+            );
             return;
         }
 
@@ -128,7 +142,7 @@ public class Doctor extends Person {
 
     public void addSlot(String slot) {
 
-        if (slot == null || slot.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(slot)) {
             System.out.println("Slot cannot be empty.");
             return;
         }
@@ -150,6 +164,10 @@ public class Doctor extends Person {
 
     public boolean hasSlot(String slot) {
 
+        if (!HelperUtils.isValidText(slot)) {
+            return false;
+        }
+
         for (int i = 0; i < slotCount; i++) {
 
             if (availableSlots[i].equalsIgnoreCase(slot)) {
@@ -163,12 +181,18 @@ public class Doctor extends Person {
 
     public void removeSlot(String slot) {
 
+        if (!HelperUtils.isValidText(slot)) {
+            System.out.println("Slot cannot be empty.");
+            return;
+        }
+
         for (int i = 0; i < slotCount; i++) {
 
             if (availableSlots[i].equalsIgnoreCase(slot)) {
 
                 for (int j = i; j < slotCount - 1; j++) {
-                    availableSlots[j] = availableSlots[j + 1];
+                    availableSlots[j] =
+                            availableSlots[j + 1];
                 }
 
                 availableSlots[slotCount - 1] = null;
@@ -186,7 +210,7 @@ public class Doctor extends Person {
 
     public void assignPatient(String patientId) {
 
-        if (patientId == null || patientId.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(patientId)) {
             System.out.println("Patient ID cannot be empty.");
             return;
         }
@@ -201,17 +225,38 @@ public class Doctor extends Person {
     }
 
 
-    // Fee Method _______________________________________________
+    // Fee Methods ______________________________________________
 
     public void raiseFee(double amount) {
 
-        if (amount <= 0) {
-            System.out.println("Fee increase must be greater than zero.");
+        if (!HelperUtils.isPositive(amount)) {
+            System.out.println(
+                    "Fee increase must be greater than zero."
+            );
             return;
         }
 
         setConsultationFee(
                 consultationFee + amount
+        );
+    }
+
+
+    // Method Overloading - Task 2.2 _____________________________
+
+    public void updateFee(double fee) {
+        setConsultationFee(fee);
+    }
+
+
+    public void updateFee(
+            double fee,
+            String reason) {
+
+        setConsultationFee(fee);
+
+        System.out.println(
+                "Reason: " + reason
         );
     }
 
@@ -230,13 +275,5 @@ public class Doctor extends Person {
                         ", Patient Load: " + getPatientLoad() +
                         ", On Call: " + isOnCall()
         );
-    }
-    public void updateFee(double fee) {
-        setConsultationFee(fee);
-    }
-
-    public void updateFee(double fee, String reason) {
-        setConsultationFee(fee);
-        System.out.println("Reason: " + reason);
     }
 }
