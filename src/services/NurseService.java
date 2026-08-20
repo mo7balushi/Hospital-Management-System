@@ -20,12 +20,19 @@ public class NurseService implements Manageable, Searchable {
             return;
         }
 
+        Nurse nurse = (Nurse) entity;
+
+        if (searchById(nurse.getId()) != null) {
+            System.out.println("Nurse ID already exists.");
+            return;
+        }
+
         if (nurseCount >= nurses.length) {
             System.out.println("Nurse storage is full.");
             return;
         }
 
-        nurses[nurseCount] = (Nurse) entity;
+        nurses[nurseCount] = nurse;
         nurseCount++;
     }
 
@@ -179,5 +186,12 @@ public class NurseService implements Manageable, Searchable {
         toNurse.assignPatient(patientId);
 
         return true;
+    }
+
+
+    // Count ____________________________________________
+
+    public int getNurseCount() {
+        return nurseCount;
     }
 }
