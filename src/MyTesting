@@ -1,0 +1,349 @@
+"C:\Users\Mohammed Al-Bulushi\.jdks\openjdk-26.0.1\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2026.1.3\lib\idea_rt.jar=57113" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath "C:\Users\Mohammed Al-Bulushi\IdeaProjects\Hospital-Management-System\out\production\Hospital-Management-System" HospitalApp
+
+--- SEEDING SAMPLE DATA ---
+Sample data seeded successfully.
+
+================================
+       TASK 2.9 TESTS
+================================
+Patients: 6
+InPatients: 2
+Doctors: 4
+Nurses: 3
+Appointments: 6
+Medical Records: 5
+Reason: Annual fee review
+generateId(): 1
+generateId(prefix): TEST-2
+isEmpty text: true
+isEmpty array: true
+validText: true
+validText min: true
+validText min/max: true
+positive int: true
+positive double: true
+range int: true
+range double: true
+
+--- POLYMORPHISM TEST ---
+ID: BASE01, Name: Test Person, Age: 36, Phone: 90000000, Email: base@email.com
+Patient: Ahmed Ali, ID: P001, Blood Group: Unknown, Emergency Contact: N/A, Registration Date: N/A, Outstanding Balance: 0.0, Insured: false
+Doctor: Omar Salim, ID: D001, Specialization: Cardiology, Experience: 15 years, Consultation Fee: 40.0, Patient Load: 1, On Call: true
+Nurse: Maryam Said, ID: N001, Department ID: WARD01, Shift: Morning, Years of Service: 8, Patient Load: 1
+InPatient: Fatma Ahmed, ID: P005, Blood Group: AB+, Admission Date: 19-08-2026, Room Number: R101, Daily Charges: 50.0, Days Admitted: 3, Total Room Cost: 150.0
+Surgeon: Hassan Ahmed, ID: D004, Specialization: Surgery, Surgeries Performed: 150, Theatre Access: true, Upcoming Surgeries: 1
+
+--- COUNT BY TYPE ---
+Person: 1
+Patient: 1
+Doctor: 1
+Nurse: 1
+InPatient: 1
+Surgeon: 1
+
+Oldest Person:
+Surgeon: Hassan Ahmed, ID: D004, Specialization: Surgery, Surgeries Performed: 150, Theatre Access: true, Upcoming Surgeries: 1
+
+--- VALIDATION TEST ---
+ID cannot be empty.
+Age must be between 0 and 120.
+Outstanding balance cannot be negative.
+Shift must be Morning, Evening, or Night.
+Invalid appointment status.
+
+Task 2.9 automated checks finished.
+================================
+
+==============================
+   HOSPITAL MANAGEMENT SYSTEM
+==============================
+1. Patients
+2. Doctors
+3. Nurses
+4. Appointments
+5. Medical Records
+6. Reports
+7. Exit
+Choose option: 1
+
+--- PATIENT MENU ---
+1. Add Patient
+2. View All Patients
+3. Search Patient By ID
+4. Remove Patient
+5. Total Outstanding
+6. Back
+Choose option: 1
+Enter patient ID: 1234
+Enter first name: Mohammed
+Enter last name: Ali
+Enter phone number: 91261161
+Enter blood group: B+
+Patient added successfully.
+
+--- PATIENT MENU ---
+1. Add Patient
+2. View All Patients
+3. Search Patient By ID
+4. Remove Patient
+5. Total Outstanding
+6. Back
+Choose option: 6
+
+==============================
+   HOSPITAL MANAGEMENT SYSTEM
+==============================
+1. Patients
+2. Doctors
+3. Nurses
+4. Appointments
+5. Medical Records
+6. Reports
+7. Exit
+Choose option: 2
+
+--- DOCTOR MENU ---
+1. View All Doctors
+2. Search Doctor By ID
+3. Remove Doctor
+4. List By Specialization
+5. Available Doctors
+6. Back
+Choose option: 1
+Doctor: Omar Salim, ID: D001, Specialization: Cardiology, Experience: 15 years, Consultation Fee: 40.0, Patient Load: 1, On Call: true
+Doctor: Ali Hamed, ID: D002, Specialization: Neurology, Experience: 11 years, Consultation Fee: 25.0, Patient Load: 0, On Call: true
+Doctor: Aisha Said, ID: D003, Specialization: Pediatrics, Experience: 8 years, Consultation Fee: 20.0, Patient Load: 0, On Call: false
+Surgeon: Hassan Ahmed, ID: D004, Specialization: Surgery, Surgeries Performed: 150, Theatre Access: true, Upcoming Surgeries: 1
+
+--- DOCTOR MENU ---
+1. View All Doctors
+2. Search Doctor By ID
+3. Remove Doctor
+4. List By Specialization
+5. Available Doctors
+6. Back
+Choose option: 4
+Enter specialization: Cardiology
+Doctor: Omar Salim, ID: D001, Specialization: Cardiology, Experience: 15 years, Consultation Fee: 40.0, Patient Load: 1, On Call: true
+
+--- DOCTOR MENU ---
+1. View All Doctors
+2. Search Doctor By ID
+3. Remove Doctor
+4. List By Specialization
+5. Available Doctors
+6. Back
+Choose option: 5
+Doctor: Omar Salim, ID: D001, Specialization: Cardiology, Experience: 15 years, Consultation Fee: 40.0, Patient Load: 1, On Call: true
+Doctor: Ali Hamed, ID: D002, Specialization: Neurology, Experience: 11 years, Consultation Fee: 25.0, Patient Load: 0, On Call: true
+Surgeon: Hassan Ahmed, ID: D004, Specialization: Surgery, Surgeries Performed: 150, Theatre Access: true, Upcoming Surgeries: 1
+
+--- DOCTOR MENU ---
+1. View All Doctors
+2. Search Doctor By ID
+3. Remove Doctor
+4. List By Specialization
+5. Available Doctors
+6. Back
+Choose option: 6
+
+==============================
+   HOSPITAL MANAGEMENT SYSTEM
+==============================
+1. Patients
+2. Doctors
+3. Nurses
+4. Appointments
+5. Medical Records
+6. Reports
+7. Exit
+Choose option: 3
+
+--- NURSE MENU ---
+1. View All Nurses
+2. Search Nurse By ID
+3. Remove Nurse
+4. List By Shift
+5. Reassign Patient
+6. Back
+Choose option: 1
+Nurse: Maryam Said, ID: N001, Department ID: WARD01, Shift: Morning, Years of Service: 8, Patient Load: 1
+Nurse: Noor Ali, ID: N002, Department ID: WARD02, Shift: Evening, Years of Service: 6, Patient Load: 1
+Nurse: Ahmed Hassan, ID: N003, Department ID: WARD03, Shift: Night, Years of Service: 10, Patient Load: 0
+
+--- NURSE MENU ---
+1. View All Nurses
+2. Search Nurse By ID
+3. Remove Nurse
+4. List By Shift
+5. Reassign Patient
+6. Back
+Choose option: 4
+Enter shift: Morning
+Nurse: Maryam Said, ID: N001, Department ID: WARD01, Shift: Morning, Years of Service: 8, Patient Load: 1
+
+--- NURSE MENU ---
+1. View All Nurses
+2. Search Nurse By ID
+3. Remove Nurse
+4. List By Shift
+5. Reassign Patient
+6. Back
+Choose option: 5
+Enter current nurse ID: N001
+Enter new nurse ID: N009
+Enter patient ID: 1234
+Unable to reassign patient.
+
+--- NURSE MENU ---
+1. View All Nurses
+2. Search Nurse By ID
+3. Remove Nurse
+4. List By Shift
+5. Reassign Patient
+6. Back
+Choose option: 6
+
+==============================
+   HOSPITAL MANAGEMENT SYSTEM
+==============================
+1. Patients
+2. Doctors
+3. Nurses
+4. Appointments
+5. Medical Records
+6. Reports
+7. Exit
+Choose option: 4
+
+--- APPOINTMENT MENU ---
+1. Schedule Appointment
+2. View All Appointments
+3. Cancel Appointment
+4. Complete Appointment
+5. Reschedule Appointment
+6. List By Status
+7. List By Patient
+8. Back
+Choose option: 1
+Enter patient ID: 1234
+Enter doctor ID: D001
+Enter appointment date: 12-12-2006
+Enter appointment time: 12:33
+Appointment scheduled successfully.
+
+--- APPOINTMENT MENU ---
+1. Schedule Appointment
+2. View All Appointments
+3. Cancel Appointment
+4. Complete Appointment
+5. Reschedule Appointment
+6. List By Status
+7. List By Patient
+8. Back
+Choose option: 2
+Appointment ID: A1, Patient ID: P001, Doctor ID: D001, Date: 21-08-2026, Time: 09:00, Status: Scheduled, Reason: General, Follow Up: false, Notes: Reception: Patient arrived early
+Appointment ID: A2, Patient ID: P002, Doctor ID: D002, Date: 21-08-2026, Time: 10:30, Status: Scheduled, Reason: General, Follow Up: false, Notes: null
+Appointment ID: A3, Patient ID: P003, Doctor ID: D003, Date: 22-08-2026, Time: 11:00, Status: Scheduled, Reason: Regular checkup, Follow Up: false, Notes: null
+Appointment ID: A4, Patient ID: P004, Doctor ID: D001, Date: 23-08-2026, Time: 12:00, Status: Scheduled, Reason: General, Follow Up: false, Notes: null
+Appointment ID: A5, Patient ID: P005, Doctor ID: D004, Date: 24-08-2026, Time: 09:30, Status: Scheduled, Reason: General, Follow Up: false, Notes: null
+Appointment ID: A6, Patient ID: P006, Doctor ID: D003, Date: 25-08-2026, Time: 14:00, Status: Scheduled, Reason: General, Follow Up: false, Notes: null
+Appointment ID: A7, Patient ID: 1234, Doctor ID: D001, Date: 12-12-2006, Time: 12:33, Status: Scheduled, Reason: General, Follow Up: false, Notes: null
+
+--- APPOINTMENT MENU ---
+1. Schedule Appointment
+2. View All Appointments
+3. Cancel Appointment
+4. Complete Appointment
+5. Reschedule Appointment
+6. List By Status
+7. List By Patient
+8. Back
+Choose option: 6
+Enter status: 6
+No appointments found.
+
+--- APPOINTMENT MENU ---
+1. Schedule Appointment
+2. View All Appointments
+3. Cancel Appointment
+4. Complete Appointment
+5. Reschedule Appointment
+6. List By Status
+7. List By Patient
+8. Back
+Choose option: 6
+Enter status: 6
+No appointments found.
+
+--- APPOINTMENT MENU ---
+1. Schedule Appointment
+2. View All Appointments
+3. Cancel Appointment
+4. Complete Appointment
+5. Reschedule Appointment
+6. List By Status
+7. List By Patient
+8. Back
+Choose option: 8
+
+==============================
+   HOSPITAL MANAGEMENT SYSTEM
+==============================
+1. Patients
+2. Doctors
+3. Nurses
+4. Appointments
+5. Medical Records
+6. Reports
+7. Exit
+Choose option: 5
+
+--- MEDICAL RECORD MENU ---
+1. View All Records
+2. Search Record By ID
+3. Remove Record
+4. List By Patient
+5. Count Confidential
+6. Back
+Choose option: 1
+Record ID: R001, Patient ID: P001, Doctor ID: D001, Visit Date: 20-08-2026, Diagnosis: High blood pressure, Prescription: Medication A, Notes: Monitor blood pressure, Confidential: false
+Record ID: R002, Patient ID: P002, Doctor ID: D002, Visit Date: 20-08-2026, Diagnosis: Migraine, Prescription: Medication B, Notes: Follow up after two weeks, Confidential: true
+Record ID: R003, Patient ID: P003, Doctor ID: D003, Visit Date: 20-08-2026, Diagnosis: Flu, Prescription: Medication C, Notes: Rest and drink water, Confidential: false
+Record ID: R004, Patient ID: P005, Doctor ID: D004, Visit Date: 20-08-2026, Diagnosis: Surgery review, Prescription: Medication D, Notes: Prepare for surgery, Confidential: true
+Record ID: R005, Patient ID: P006, Doctor ID: D001, Visit Date: 20-08-2026, Diagnosis: Chest pain, Prescription: Medication E, Notes: Further tests required, Confidential: true
+
+--- MEDICAL RECORD MENU ---
+1. View All Records
+2. Search Record By ID
+3. Remove Record
+4. List By Patient
+5. Count Confidential
+6. Back
+Choose option: 4
+Enter patient ID: 1234
+No records found for this patient.
+
+--- MEDICAL RECORD MENU ---
+1. View All Records
+2. Search Record By ID
+3. Remove Record
+4. List By Patient
+5. Count Confidential
+6. Back
+Choose option: 6
+
+==============================
+   HOSPITAL MANAGEMENT SYSTEM
+==============================
+1. Patients
+2. Doctors
+3. Nurses
+4. Appointments
+5. Medical Records
+6. Reports
+7. Exit
+Choose option: 7
+Exiting Hospital Management System.
+
+Process finished with exit code 0
