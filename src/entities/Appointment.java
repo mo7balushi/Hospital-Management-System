@@ -1,6 +1,7 @@
 package entities;
+import interfaces.Displayable;
 
-public class Appointment {
+public class Appointment implements Displayable {
 
     private String appointmentId;
     private String patientId;
@@ -172,7 +173,7 @@ public class Appointment {
 
 
     // Display _________________________________________________
-
+@Override
     public void displayInfo() {
 //
         System.out.println(
@@ -185,6 +186,16 @@ public class Appointment {
                         ", Reason: " + getReason() +
                         ", Follow Up: " + isFollowUp()
         );
+    }
+    @Override
+    public String displaySummary() {
+        return getAppointmentId()
+                + " - "
+                + getPatientId()
+                + " with "
+                + getDoctorId()
+                + " - "
+                + getStatus();
     }
     private String notes;
     public String getNotes() {

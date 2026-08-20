@@ -1,6 +1,7 @@
 package entities;
+import interfaces.Displayable;
 
-public class Person {
+public class Person implements Displayable {
 
     private String id;
     private String firstName;
@@ -216,7 +217,7 @@ public class Person {
     public String getFullName() {
         return getFirstName() + " " + getLastName();
     }
-
+    @Override
     public void displayInfo() {
         System.out.println(
                 "ID: " + getId() +
@@ -226,6 +227,7 @@ public class Person {
                         ", Email: " + getEmail()
         );
     }
+    @Override
     public String displaySummary() {
         return getId() + " - " + getFullName();
     }

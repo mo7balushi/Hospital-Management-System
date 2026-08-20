@@ -1,6 +1,7 @@
 package entities;
+import interfaces.Displayable;
 
-public class MedicalRecord {
+public class MedicalRecord implements Displayable {
 
     private String recordId;
     private String patientId;
@@ -161,7 +162,7 @@ public class MedicalRecord {
 
 
     // Display _________________________________________________
-
+    @Override
     public void displayInfo() {
 
         System.out.println(
@@ -174,5 +175,12 @@ public class MedicalRecord {
                         ", Notes: " + getNotes() +
                         ", Confidential: " + isConfidential()
         );
+    }
+
+    @Override
+    public String displaySummary() {
+        return getRecordId()
+                + " - Patient: "
+                + getPatientId();
     }
 }//?
