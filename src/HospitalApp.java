@@ -4,16 +4,29 @@ import entities.Doctor;
 import entities.Nurse;
 import entities.InPatient;
 import entities.Surgeon;
+
+import services.PatientService;
+import services.DoctorService;
+
 import utils.InputHandler;
 
 public class HospitalApp {
+
+    private static PatientService patientService =
+            new PatientService();
+
+    private static DoctorService doctorService =
+            new DoctorService();
+
 
     public static void main(String[] args) {
         start();
     }
 
 
-    // Main Menu ________________________________________________
+    // =========================================================
+    // Main Menu
+    // =========================================================
 
     public static void start() {
 
@@ -41,15 +54,11 @@ public class HospitalApp {
             switch (choice) {
 
                 case 1:
-                    System.out.println(
-                            "Patients menu coming next."
-                    );
+                    patientMenu();
                     break;
 
                 case 2:
-                    System.out.println(
-                            "Doctors menu coming next."
-                    );
+                    doctorMenu();
                     break;
 
                 case 3:
@@ -78,6 +87,7 @@ public class HospitalApp {
 
                 case 7:
                     exit = true;
+
                     System.out.println(
                             "Exiting Hospital Management System."
                     );
@@ -87,7 +97,374 @@ public class HospitalApp {
     }
 
 
-    // Polymorphism Helpers ______________________________________
+    // =========================================================
+    // Patient Menu
+    // =========================================================
+
+    public static void patientMenu() {
+
+        boolean back = false;
+
+        while (!back) {
+
+            System.out.println("\n--- PATIENT MENU ---");
+            System.out.println("1. Add Patient");
+            System.out.println("2. View All Patients");
+            System.out.println("3. Search Patient By ID");
+            System.out.println("4. Remove Patient");
+            System.out.println("5. Total Outstanding");
+            System.out.println("6. Back");
+
+            int choice = InputHandler.readInt(
+                    "Choose option: ",
+                    1,
+                    6
+            );
+
+            switch (choice) {
+
+                case 1:
+                    addPatientHandler();
+                    break;
+
+                case 2:
+                    viewPatientsHandler();
+                    break;
+
+                case 3:
+                    searchPatientHandler();
+                    break;
+
+                case 4:
+                    removePatientHandler();
+                    break;
+
+                case 5:
+                    System.out.println(
+                            "Total Outstanding: "
+                                    + patientService
+                                    .totalOutstanding()
+                    );
+                    break;
+
+                case 6:
+                    back = true;
+                    break;
+            }
+        }
+    }
+
+
+    // Add Patient ______________________________________________
+
+    public static void addPatientHandler() {
+
+        String id =
+                InputHandler.readText(
+                        "Enter patient ID: "
+                );
+
+        String firstName =
+                InputHandler.readText(
+                        "Enter first name: "
+                );
+
+        String lastName =
+                InputHandler.readText(
+                        "Enter last name: "
+                );
+
+        String phone =
+                InputHandler.readText(
+                        "Enter phone number: "
+                );
+
+        String bloodGroup =
+                InputHandler.readText(
+                        "Enter blood group: "
+                );
+
+        patientService.addPatient(
+                id,
+                firstName,
+                lastName,
+                phone,
+                bloodGroup
+        );
+
+        System.out.println(
+                "Patient added successfully."
+        );
+    }
+
+
+    // View Patients _____________________________________________
+
+    public static void viewPatientsHandler() {
+
+        Object[] patients =
+                patientService.getAll();
+
+        if (patients.length == 0) {
+
+            System.out.println(
+                    "No patients found."
+            );
+
+            return;
+        }
+
+        for (Object obj : patients) {
+
+            Patient patient =
+                    (Patient) obj;
+
+            patient.displayInfo();
+        }
+    }
+
+
+    // Search Patient ____________________________________________
+
+    public static void searchPatientHandler() {
+
+        String id =
+                InputHandler.readText(
+                        "Enter patient ID: "
+                );
+
+        Patient patient =
+                (Patient) patientService
+                        .searchById(id);
+
+        if (patient == null) {
+
+            System.out.println(
+                    "Patient not found."
+            );
+
+            return;
+        }
+
+        patient.displayInfo();
+    }
+
+
+    // Remove Patient ____________________________________________
+
+    public static void removePatientHandler() {
+
+        String id =
+                InputHandler.readText(
+                        "Enter patient ID to remove: "
+                );
+
+        boolean removed =
+                patientService.removeById(id);
+
+        if (removed) {
+
+            System.out.println(
+                    "Patient removed successfully."
+            );
+
+        } else {
+
+            System.out.println(
+                    "Patient not found."
+            );
+        }
+    }
+
+
+    // =========================================================
+    // Doctor Menu
+    // =========================================================
+
+    public static void doctorMenu() {
+
+        boolean back = false;
+
+        while (!back) {
+
+            System.out.println("\n--- DOCTOR MENU ---");
+            System.out.println("1. View All Doctors");
+            System.out.println("2. Search Doctor By ID");
+            System.out.println("3. Remove Doctor");
+            System.out.println("4. List By Specialization");
+            System.out.println("5. Available Doctors");
+            System.out.println("6. Back");
+
+            int choice = InputHandler.readInt(
+                    "Choose option: ",
+                    1,
+                    6
+            );
+
+            switch (choice) {
+
+                case 1:
+                    viewDoctorsHandler();
+                    break;
+
+                case 2:
+                    searchDoctorHandler();
+                    break;
+
+                case 3:
+                    removeDoctorHandler();
+                    break;
+
+                case 4:
+                    listDoctorsBySpecializationHandler();
+                    break;
+
+                case 5:
+                    availableDoctorsHandler();
+                    break;
+
+                case 6:
+                    back = true;
+                    break;
+            }
+        }
+    }
+
+
+    // View Doctors ______________________________________________
+
+    public static void viewDoctorsHandler() {
+
+        Object[] doctors =
+                doctorService.getAll();
+
+        if (doctors.length == 0) {
+
+            System.out.println(
+                    "No doctors found."
+            );
+
+            return;
+        }
+
+        for (Object obj : doctors) {
+
+            Doctor doctor =
+                    (Doctor) obj;
+
+            doctor.displayInfo();
+        }
+    }
+
+
+    // Search Doctor _____________________________________________
+
+    public static void searchDoctorHandler() {
+
+        String id =
+                InputHandler.readText(
+                        "Enter doctor ID: "
+                );
+
+        Doctor doctor =
+                (Doctor) doctorService
+                        .searchById(id);
+
+        if (doctor == null) {
+
+            System.out.println(
+                    "Doctor not found."
+            );
+
+            return;
+        }
+
+        doctor.displayInfo();
+    }
+
+
+    // Remove Doctor _____________________________________________
+
+    public static void removeDoctorHandler() {
+
+        String id =
+                InputHandler.readText(
+                        "Enter doctor ID to remove: "
+                );
+
+        boolean removed =
+                doctorService.removeById(id);
+
+        if (removed) {
+
+            System.out.println(
+                    "Doctor removed successfully."
+            );
+
+        } else {
+
+            System.out.println(
+                    "Doctor not found."
+            );
+        }
+    }
+
+
+    // List Doctors By Specialization _____________________________
+
+    public static void listDoctorsBySpecializationHandler() {
+
+        String specialization =
+                InputHandler.readText(
+                        "Enter specialization: "
+                );
+
+        Doctor[] doctors =
+                doctorService
+                        .listBySpecialization(
+                                specialization
+                        );
+
+        if (doctors.length == 0) {
+
+            System.out.println(
+                    "No doctors found."
+            );
+
+            return;
+        }
+
+        for (Doctor doctor : doctors) {
+            doctor.displayInfo();
+        }
+    }
+
+
+    // Available Doctors _________________________________________
+
+    public static void availableDoctorsHandler() {
+
+        Doctor[] doctors =
+                doctorService.availableDoctors();
+
+        if (doctors.length == 0) {
+
+            System.out.println(
+                    "No available doctors found."
+            );
+
+            return;
+        }
+
+        for (Doctor doctor : doctors) {
+            doctor.displayInfo();
+        }
+    }
+
+
+    // =========================================================
+    // Polymorphism Helpers - Task 2.3
+    // =========================================================
 
     public static void printAll(Person[] people) {
 
@@ -135,17 +512,38 @@ public class HospitalApp {
             }
         }
 
-        System.out.println("\n--- COUNT BY TYPE ---");
-        System.out.println("Person: " + personCount);
-        System.out.println("Patient: " + patientCount);
-        System.out.println("Doctor: " + doctorCount);
-        System.out.println("Nurse: " + nurseCount);
-        System.out.println("InPatient: " + inPatientCount);
-        System.out.println("Surgeon: " + surgeonCount);
+        System.out.println(
+                "\n--- COUNT BY TYPE ---"
+        );
+
+        System.out.println(
+                "Person: " + personCount
+        );
+
+        System.out.println(
+                "Patient: " + patientCount
+        );
+
+        System.out.println(
+                "Doctor: " + doctorCount
+        );
+
+        System.out.println(
+                "Nurse: " + nurseCount
+        );
+
+        System.out.println(
+                "InPatient: " + inPatientCount
+        );
+
+        System.out.println(
+                "Surgeon: " + surgeonCount
+        );
     }
 
 
-    public static Person findOldest(Person[] people) {
+    public static Person findOldest(
+            Person[] people) {
 
         Person oldest = null;
 
@@ -156,7 +554,8 @@ public class HospitalApp {
             }
 
             if (oldest == null
-                    || person.getAge() > oldest.getAge()) {
+                    || person.getAge()
+                    > oldest.getAge()) {
 
                 oldest = person;
             }
