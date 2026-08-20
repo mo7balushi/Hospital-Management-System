@@ -1,5 +1,7 @@
 package entities;
+
 import interfaces.Displayable;
+import utils.HelperUtils;
 
 public class Person implements Displayable {
 
@@ -15,7 +17,9 @@ public class Person implements Displayable {
     private int age;
     private boolean active;
 
-    //constructor
+
+    // Constructors ______________________________________________
+
     public Person(
             String id,
             String firstName,
@@ -41,7 +45,10 @@ public class Person implements Displayable {
         setAge(age);
         setActive(active);
     }
-    // overloaded constructor
+
+
+    // Overloaded Constructor
+
     public Person(
             String id,
             String firstName,
@@ -61,10 +68,13 @@ public class Person implements Displayable {
                 true
         );
     }
-// Setters ______________________________________________
+
+
+    // Setters _________________________________________________
 
     public void setId(String id) {
-        if (id == null || id.trim().isEmpty()) {
+
+        if (!HelperUtils.isValidText(id)) {
             System.out.println("ID cannot be empty.");
             return;
         }
@@ -72,8 +82,10 @@ public class Person implements Displayable {
         this.id = id;
     }
 
+
     public void setFirstName(String firstName) {
-        if (firstName == null || firstName.trim().isEmpty()) {
+
+        if (!HelperUtils.isValidText(firstName)) {
             System.out.println("First name cannot be empty.");
             return;
         }
@@ -81,8 +93,10 @@ public class Person implements Displayable {
         this.firstName = firstName;
     }
 
+
     public void setLastName(String lastName) {
-        if (lastName == null || lastName.trim().isEmpty()) {
+
+        if (!HelperUtils.isValidText(lastName)) {
             System.out.println("Last name cannot be empty.");
             return;
         }
@@ -90,8 +104,10 @@ public class Person implements Displayable {
         this.lastName = lastName;
     }
 
+
     public void setDateOfBirth(String dateOfBirth) {
-        if (dateOfBirth == null || dateOfBirth.trim().isEmpty()) {
+
+        if (!HelperUtils.isValidText(dateOfBirth)) {
             System.out.println("Date of birth cannot be empty.");
             return;
         }
@@ -99,8 +115,10 @@ public class Person implements Displayable {
         this.dateOfBirth = dateOfBirth;
     }
 
+
     public void setGender(String gender) {
-        if (gender == null || gender.trim().isEmpty()) {
+
+        if (!HelperUtils.isValidText(gender)) {
             System.out.println("Gender cannot be empty.");
             return;
         }
@@ -108,22 +126,21 @@ public class Person implements Displayable {
         this.gender = gender;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
-            System.out.println("Phone number cannot be empty.");
-            return;
-        }
 
-        if (!phoneNumber.matches("\\d+")) {
-            System.out.println("Phone number must contain digits only.");
+    public void setPhoneNumber(String phoneNumber) {
+
+        if (!HelperUtils.isValidPhone(phoneNumber)) {
+            System.out.println("Invalid phone number.");
             return;
         }
 
         this.phoneNumber = phoneNumber;
     }
 
+
     public void setEmail(String email) {
-        if (email == null || email.trim().isEmpty()) {
+
+        if (!HelperUtils.isValidText(email)) {
             System.out.println("Email cannot be empty.");
             return;
         }
@@ -136,8 +153,10 @@ public class Person implements Displayable {
         this.email = email;
     }
 
+
     public void setAddress(String address) {
-        if (address == null || address.trim().isEmpty()) {
+
+        if (!HelperUtils.isValidText(address)) {
             System.out.println("Address cannot be empty.");
             return;
         }
@@ -145,8 +164,10 @@ public class Person implements Displayable {
         this.address = address;
     }
 
+
     public void setNationalId(String nationalId) {
-        if (nationalId == null || nationalId.trim().isEmpty()) {
+
+        if (!HelperUtils.isValidText(nationalId)) {
             System.out.println("National ID cannot be empty.");
             return;
         }
@@ -154,8 +175,10 @@ public class Person implements Displayable {
         this.nationalId = nationalId;
     }
 
+
     public void setAge(int age) {
-        if (age < 0 || age > 120) {
+
+        if (!HelperUtils.isValidAge(age)) {
             System.out.println("Age must be between 0 and 120.");
             return;
         }
@@ -163,12 +186,13 @@ public class Person implements Displayable {
         this.age = age;
     }
 
+
     public void setActive(boolean active) {
         this.active = active;
     }
 
 
-// Getters ______________________________________________
+    // Getters _________________________________________________
 
     public String getId() {
         return id;
@@ -214,11 +238,22 @@ public class Person implements Displayable {
         return active;
     }
 
+
+    // Functions _______________________________________________
+
     public String getFullName() {
         return getFirstName() + " " + getLastName();
     }
+
+
+    public boolean isAdult() {
+        return getAge() >= 18;
+    }
+
+
     @Override
     public void displayInfo() {
+
         System.out.println(
                 "ID: " + getId() +
                         ", Name: " + getFullName() +
@@ -227,13 +262,18 @@ public class Person implements Displayable {
                         ", Email: " + getEmail()
         );
     }
+
+
     @Override
     public String displaySummary() {
         return getId() + " - " + getFullName();
     }
+
+
     @Override
     public String toString() {
-        return "Person{ " +
+
+        return "Person{" +
                 "id='" + id + '\'' +
                 ", name='" + getFullName() + '\'' +
                 ", age=" + age +
@@ -241,9 +281,7 @@ public class Person implements Displayable {
                 '}';
     }
 
-    public boolean isAdult() {
-        return getAge() >= 18;
-    }
+
     @Override
     public boolean equals(Object obj) {
 
@@ -259,6 +297,4 @@ public class Person implements Displayable {
 
         return id != null && id.equals(other.id);
     }
-
-
 }
