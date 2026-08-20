@@ -174,6 +174,6 @@ public class InputHandler {
             System.out.println(
                     "Invalid option. Please choose an allowed value."
             );
-        }
+        }//
     }
 }
