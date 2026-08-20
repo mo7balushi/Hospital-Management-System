@@ -21,12 +21,19 @@ public class DoctorService implements Manageable, Searchable {
             return;
         }
 
+        Doctor doctor = (Doctor) entity;
+
+        if (searchById(doctor.getId()) != null) {
+            System.out.println("Doctor ID already exists.");
+            return;
+        }
+
         if (doctorCount >= doctors.length) {
             System.out.println("Doctor storage is full.");
             return;
         }
 
-        doctors[doctorCount] = (Doctor) entity;
+        doctors[doctorCount] = doctor;
         doctorCount++;
     }
 
@@ -94,6 +101,10 @@ public class DoctorService implements Manageable, Searchable {
                             || doctor.getSpecialization()
                             .toLowerCase()
                             .contains(keyword.toLowerCase())
+
+                            || doctor.getId()
+                            .toLowerCase()
+                            .contains(keyword.toLowerCase())
             ) {
 
                 temp[count] = doctor;
@@ -127,18 +138,27 @@ public class DoctorService implements Manageable, Searchable {
     }
 
 
-    // Doctor-specific methods ___________________________
+    // Add Surgeon ______________________________________
 
     public void addSurgeon(Surgeon surgeon) {
+
+        if (surgeon == null) {
+            System.out.println("Surgeon cannot be null.");
+            return;
+        }
+
         add(surgeon);
     }
 
+
+    // Assign Patient ___________________________________
 
     public boolean assignPatient(
             String doctorId,
             String patientId) {
 
-        Doctor doctor = (Doctor) searchById(doctorId);
+        Doctor doctor =
+                (Doctor) searchById(doctorId);
 
         if (doctor == null) {
             return false;
@@ -149,6 +169,8 @@ public class DoctorService implements Manageable, Searchable {
         return true;
     }
 
+
+    // List by Specialization ____________________________
 
     public Doctor[] listBySpecialization(
             String specialization) {
@@ -177,6 +199,8 @@ public class DoctorService implements Manageable, Searchable {
     }
 
 
+    // Available Doctors ________________________________
+
     public Doctor[] availableDoctors() {
 
         Doctor[] temp = new Doctor[doctorCount];
@@ -198,5 +222,12 @@ public class DoctorService implements Manageable, Searchable {
         }
 
         return result;
+    }
+
+
+    // Count ____________________________________________
+
+    public int getDoctorCount() {
+        return doctorCount;
     }
 }
