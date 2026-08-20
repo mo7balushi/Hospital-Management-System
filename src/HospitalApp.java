@@ -88,9 +88,7 @@ public class HospitalApp {
                     break;
 
                 case 6:
-                    System.out.println(
-                            "Reports menu coming next."
-                    );
+                    reportsHandler();
                     break;
 
                 case 7:
@@ -208,7 +206,9 @@ public class HospitalApp {
                 patientService.getAll();
 
         if (patients.length == 0) {
-            System.out.println("No patients found.");
+            System.out.println(
+                    "No patients found."
+            );
             return;
         }
 
@@ -233,7 +233,9 @@ public class HospitalApp {
                 (Patient) patientService.searchById(id);
 
         if (patient == null) {
-            System.out.println("Patient not found.");
+            System.out.println(
+                    "Patient not found."
+            );
             return;
         }
 
@@ -323,7 +325,9 @@ public class HospitalApp {
                 doctorService.getAll();
 
         if (doctors.length == 0) {
-            System.out.println("No doctors found.");
+            System.out.println(
+                    "No doctors found."
+            );
             return;
         }
 
@@ -348,7 +352,9 @@ public class HospitalApp {
                 (Doctor) doctorService.searchById(id);
 
         if (doctor == null) {
-            System.out.println("Doctor not found.");
+            System.out.println(
+                    "Doctor not found."
+            );
             return;
         }
 
@@ -391,7 +397,9 @@ public class HospitalApp {
                 );
 
         if (doctors.length == 0) {
-            System.out.println("No doctors found.");
+            System.out.println(
+                    "No doctors found."
+            );
             return;
         }
 
@@ -479,7 +487,9 @@ public class HospitalApp {
                 nurseService.getAll();
 
         if (nurses.length == 0) {
-            System.out.println("No nurses found.");
+            System.out.println(
+                    "No nurses found."
+            );
             return;
         }
 
@@ -504,7 +514,9 @@ public class HospitalApp {
                 (Nurse) nurseService.searchById(id);
 
         if (nurse == null) {
-            System.out.println("Nurse not found.");
+            System.out.println(
+                    "Nurse not found."
+            );
             return;
         }
 
@@ -607,14 +619,30 @@ public class HospitalApp {
                     "\n--- APPOINTMENT MENU ---"
             );
 
-            System.out.println("1. Schedule Appointment");
-            System.out.println("2. View All Appointments");
-            System.out.println("3. Cancel Appointment");
-            System.out.println("4. Complete Appointment");
-            System.out.println("5. Reschedule Appointment");
-            System.out.println("6. List By Status");
-            System.out.println("7. List By Patient");
-            System.out.println("8. Back");
+            System.out.println(
+                    "1. Schedule Appointment"
+            );
+            System.out.println(
+                    "2. View All Appointments"
+            );
+            System.out.println(
+                    "3. Cancel Appointment"
+            );
+            System.out.println(
+                    "4. Complete Appointment"
+            );
+            System.out.println(
+                    "5. Reschedule Appointment"
+            );
+            System.out.println(
+                    "6. List By Status"
+            );
+            System.out.println(
+                    "7. List By Patient"
+            );
+            System.out.println(
+                    "8. Back"
+            );
 
             int choice = InputHandler.readInt(
                     "Choose option: ",
@@ -861,12 +889,24 @@ public class HospitalApp {
                     "\n--- MEDICAL RECORD MENU ---"
             );
 
-            System.out.println("1. View All Records");
-            System.out.println("2. Search Record By ID");
-            System.out.println("3. Remove Record");
-            System.out.println("4. List By Patient");
-            System.out.println("5. Count Confidential");
-            System.out.println("6. Back");
+            System.out.println(
+                    "1. View All Records"
+            );
+            System.out.println(
+                    "2. Search Record By ID"
+            );
+            System.out.println(
+                    "3. Remove Record"
+            );
+            System.out.println(
+                    "4. List By Patient"
+            );
+            System.out.println(
+                    "5. Count Confidential"
+            );
+            System.out.println(
+                    "6. Back"
+            );
 
             int choice = InputHandler.readInt(
                     "Choose option: ",
@@ -996,6 +1036,89 @@ public class HospitalApp {
         for (MedicalRecord record : records) {
             record.displayInfo();
         }
+    }
+
+
+    // =========================================================
+    // Reports Handler - Task 2.8
+    // =========================================================
+
+    public static void reportsHandler() {
+
+        Object[] patients =
+                patientService.getAll();
+
+        Object[] doctors =
+                doctorService.getAll();
+
+        Object[] nurses =
+                nurseService.getAll();
+
+        Object[] appointments =
+                appointmentService.getAll();
+
+        Object[] records =
+                recordService.getAll();
+
+        InPatient[] inPatients =
+                patientService.listInPatients();
+
+
+        System.out.println(
+                "\n=============================="
+        );
+
+        System.out.println(
+                "       HOSPITAL REPORTS"
+        );
+
+        System.out.println(
+                "=============================="
+        );
+
+        System.out.println(
+                "Total Patients: "
+                        + patients.length
+        );
+
+        System.out.println(
+                "Total InPatients: "
+                        + inPatients.length
+        );
+
+        System.out.println(
+                "Total Doctors: "
+                        + doctors.length
+        );
+
+        System.out.println(
+                "Total Nurses: "
+                        + nurses.length
+        );
+
+        System.out.println(
+                "Total Appointments: "
+                        + appointments.length
+        );
+
+        System.out.println(
+                "Total Medical Records: "
+                        + records.length
+        );
+
+        System.out.println(
+                "Confidential Records: "
+                        + recordService.countConfidential()
+        );
+
+        System.out.println(
+                "Total Outstanding Balance: "
+                        + patientService.totalOutstanding()
+        );
+
+        System.out.println(
+                "=============================="
+        );
     }
 
 
