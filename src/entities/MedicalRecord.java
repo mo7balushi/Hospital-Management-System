@@ -1,5 +1,7 @@
 package entities;
+
 import interfaces.Displayable;
+import utils.HelperUtils;
 
 public class MedicalRecord implements Displayable {
 
@@ -40,7 +42,7 @@ public class MedicalRecord implements Displayable {
 
     public void setRecordId(String recordId) {
 
-        if (recordId == null || recordId.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(recordId)) {
             System.out.println("Record ID cannot be empty.");
             return;
         }
@@ -51,7 +53,7 @@ public class MedicalRecord implements Displayable {
 
     public void setPatientId(String patientId) {
 
-        if (patientId == null || patientId.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(patientId)) {
             System.out.println("Patient ID cannot be empty.");
             return;
         }
@@ -62,7 +64,7 @@ public class MedicalRecord implements Displayable {
 
     public void setDoctorId(String doctorId) {
 
-        if (doctorId == null || doctorId.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(doctorId)) {
             System.out.println("Doctor ID cannot be empty.");
             return;
         }
@@ -73,7 +75,7 @@ public class MedicalRecord implements Displayable {
 
     public void setVisitDate(String visitDate) {
 
-        if (visitDate == null || visitDate.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(visitDate)) {
             System.out.println("Visit date cannot be empty.");
             return;
         }
@@ -83,11 +85,23 @@ public class MedicalRecord implements Displayable {
 
 
     public void setDiagnosis(String diagnosis) {
+
+        if (!HelperUtils.isValidText(diagnosis)) {
+            System.out.println("Diagnosis cannot be empty.");
+            return;
+        }
+
         this.diagnosis = diagnosis;
     }
 
 
     public void setPrescription(String prescription) {
+
+        if (!HelperUtils.isValidText(prescription)) {
+            System.out.println("Prescription cannot be empty.");
+            return;
+        }
+
         this.prescription = prescription;
     }
 
@@ -102,7 +116,7 @@ public class MedicalRecord implements Displayable {
     }
 
 
-    // Getters _________________________________________________
+    // Getters __________________________________===============
 
     public String getRecordId() {
         return recordId;
@@ -141,12 +155,12 @@ public class MedicalRecord implements Displayable {
 
     public void appendNote(String extraNote) {
 
-        if (extraNote == null || extraNote.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(extraNote)) {
             System.out.println("Note cannot be empty.");
             return;
         }
 
-        if (notes == null || notes.trim().isEmpty()) {
+        if (!HelperUtils.isValidText(notes)) {
             notes = extraNote;
         } else {
             notes = notes + " | " + extraNote;
@@ -162,6 +176,7 @@ public class MedicalRecord implements Displayable {
 
 
     // Display _________________________________________________
+
     @Override
     public void displayInfo() {
 
@@ -177,10 +192,12 @@ public class MedicalRecord implements Displayable {
         );
     }
 
+
     @Override
     public String displaySummary() {
+
         return getRecordId()
                 + " - Patient: "
                 + getPatientId();
     }
-}//?
+}
