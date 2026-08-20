@@ -129,6 +129,13 @@ public class HospitalApp {
         System.out.println("\n--- POLYMORPHISM TEST ---");
         printAll(people);
         countByType(people);
+        Person oldest = findOldest(people);
+
+        System.out.println("\n--- OLDEST PERSON ---");
+
+        if (oldest != null) {
+            oldest.displayInfo();
+        }
 
     }
 
@@ -190,5 +197,23 @@ public class HospitalApp {
         System.out.println("Nurse: " + nurseCount);
         System.out.println("InPatient: " + inPatientCount);
         System.out.println("Surgeon: " + surgeonCount);
+    }
+
+    public static Person findOldest(Person[] people) {
+
+        Person oldest = null;
+
+        for (Person person : people) {
+
+            if (person == null) {
+                continue;
+            }
+
+            if (oldest == null || person.getAge() > oldest.getAge()) {
+                oldest = person;
+            }
+        }
+
+        return oldest;
     }
 }
