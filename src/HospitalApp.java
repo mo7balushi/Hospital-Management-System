@@ -4,144 +4,90 @@ import entities.Doctor;
 import entities.Nurse;
 import entities.InPatient;
 import entities.Surgeon;
+import utils.InputHandler;
 
 public class HospitalApp {
 
     public static void main(String[] args) {
-
-        Person[] people = new Person[6];
-        Person person = new Person(
-                "P001",
-                "Ahmed",
-                "Ali",
-                "01-01-1990",
-                "Male",
-                "91234567",
-                "ahmed@email.com",
-                "Muscat",
-                "N001",
-                36,
-                true
-        );
-
-        Patient patient = new Patient(
-                "P002",
-                "Sara",
-                "Hassan",
-                "05-05-1995",
-                "Female",
-                "92345678",
-                "sara@email.com",
-                "Sohar",
-                "N002",
-                31,
-                true,
-                "A+",
-                "99887766",
-                "19-08-2026",
-                100.0,
-                true
-        );
-
-        Doctor doctor = new Doctor(
-                "D001",
-                "Omar",
-                "Salim",
-                "10-10-1985",
-                "Male",
-                "93456789",
-                "omar@email.com",
-                "Muscat",
-                "N003",
-                40,
-                true,
-                "Cardiology",
-                12,
-                25.0,
-                true
-        );
-
-        Nurse nurse = new Nurse(
-                "N001",
-                "Maryam",
-                "Said",
-                "12-12-1992",
-                "Female",
-                "94567890",
-                "maryam@email.com",
-                "Nizwa",
-                "N004",
-                33,
-                true,
-                "DEP01",
-                "Night",
-                8
-        );
-
-        InPatient inPatient = new InPatient(
-                "P003",
-                "Khalid",
-                "Nasser",
-                "03-03-1988",
-                "Male",
-                "95678901",
-                "khalid@email.com",
-                "Salalah",
-                "N005",
-                38,
-                true,
-                "O+",
-                "98765432",
-                "18-08-2026",
-                200.0,
-                false,
-                "18-08-2026",
-                "R101",
-                50.0,
-                3
-        );
-
-        Surgeon surgeon = new Surgeon(
-                "D002",
-                "Fatma",
-                "Ahmed",
-                "07-07-1980",
-                "Female",
-                "96789012",
-                "fatma@email.com",
-                "Muscat",
-                "N006",
-                46,
-                true,
-                "Surgery",
-                18,
-                40.0,
-                true,
-                120,
-                true
-        );
-        people[0] = person;
-        people[1] = patient;
-        people[2] = doctor;
-        people[3] = nurse;
-        people[4] = inPatient;
-        people[5] = surgeon;
-        System.out.println("\n--- POLYMORPHISM TEST ---");
-        printAll(people);
-        countByType(people);
-        Person oldest = findOldest(people);
-
-        System.out.println("\n--- OLDEST PERSON ---");
-
-        if (oldest != null) {
-            oldest.displayInfo();
-        }
-
+        start();
     }
-//
 
 
+    // Main Menu ________________________________________________
 
+    public static void start() {
+
+        boolean exit = false;
+
+        while (!exit) {
+
+            System.out.println("\n==============================");
+            System.out.println("   HOSPITAL MANAGEMENT SYSTEM");
+            System.out.println("==============================");
+            System.out.println("1. Patients");
+            System.out.println("2. Doctors");
+            System.out.println("3. Nurses");
+            System.out.println("4. Appointments");
+            System.out.println("5. Medical Records");
+            System.out.println("6. Reports");
+            System.out.println("7. Exit");
+
+            int choice = InputHandler.readInt(
+                    "Choose option: ",
+                    1,
+                    7
+            );
+
+            switch (choice) {
+
+                case 1:
+                    System.out.println(
+                            "Patients menu coming next."
+                    );
+                    break;
+
+                case 2:
+                    System.out.println(
+                            "Doctors menu coming next."
+                    );
+                    break;
+
+                case 3:
+                    System.out.println(
+                            "Nurses menu coming next."
+                    );
+                    break;
+
+                case 4:
+                    System.out.println(
+                            "Appointments menu coming next."
+                    );
+                    break;
+
+                case 5:
+                    System.out.println(
+                            "Medical Records menu coming next."
+                    );
+                    break;
+
+                case 6:
+                    System.out.println(
+                            "Reports menu coming next."
+                    );
+                    break;
+
+                case 7:
+                    exit = true;
+                    System.out.println(
+                            "Exiting Hospital Management System."
+                    );
+                    break;
+            }
+        }
+    }
+
+
+    // Polymorphism Helpers ______________________________________
 
     public static void printAll(Person[] people) {
 
@@ -152,7 +98,6 @@ public class HospitalApp {
             }
         }
     }
-
 
 
     public static void countByType(Person[] people) {
@@ -199,6 +144,7 @@ public class HospitalApp {
         System.out.println("Surgeon: " + surgeonCount);
     }
 
+
     public static Person findOldest(Person[] people) {
 
         Person oldest = null;
@@ -209,11 +155,13 @@ public class HospitalApp {
                 continue;
             }
 
-            if (oldest == null || person.getAge() > oldest.getAge()) {
+            if (oldest == null
+                    || person.getAge() > oldest.getAge()) {
+
                 oldest = person;
             }
         }
-        return oldest;
 
+        return oldest;
     }
 }
